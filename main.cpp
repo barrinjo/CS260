@@ -1,9 +1,7 @@
-#include <iostream>
-#include <list.hpp>
-#include <linkedList.hpp>
+#include "list.hpp"
+#include "linkedList.hpp"
 
-int main(int argc, char const *argv[])
-{
-        list<int> list - new linkedList<int>();
+int main(int argc, char const *argv[]) {
+        linkedList<int> list;
         return 0;
 }
