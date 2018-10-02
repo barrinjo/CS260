@@ -8,24 +8,28 @@ class linkedList : public list<T> {
                 T data;
                 node *next;
                 node(T data): data(data), next(NULL){}
+                ~node() { if(next) delete next; }\
         };
 
         node *head;
+        node *tail;
 public:
-        linkedList(): head(NULL){}
-        ~linkedList() { if (head) delete head;}
+        linkedList(): head(NULL), tail(NULL) {}
+        ~linkedList() { if (head) delete head; }
 	void append(T data){
-		if(!head) {
-			head = new node(data);
-		}
-		else {
-			node *n = head;
-			while(n->next) {
-				n = n->next;
-			}
-			n->next = new node(data);
-		}
+		if(!tail)
+			tail = head = new node(data);
+		else
+			tail = tail->next = new node(data);
 	}
+
+        void insert(T data) {
+                node *n = new node(data);
+                n->next = head;
+                head = n;
+                if(!tail)
+                        tail = n;
+        }
 
 	void print(std::ostream& os) {
 		node *n = head;
@@ -34,12 +38,6 @@ public:
                         os << std::endl;
 			n = n->next;
 		}
-	}
-
-	void insert(T data) {
-		node *n = new node(data);
-		n->next = head;
-		head = n;
 	}
 };
 

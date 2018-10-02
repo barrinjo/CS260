@@ -1,6 +1,6 @@
-#include <iostream>
 #ifndef LIST_HPP
 #define LIST_HPP
+#include<iostream>
 
 template <typename T>
 class list {
