@@ -5,9 +5,9 @@
 template <typename T>
 class list {
 public:
-        void append(T data);
-        void insert(T data);
-        void print(std::ostream& os);
+        virtual void append(T data) = 0;
+        virtual void insert(T data) = 0;
+        virtual void print(std::ostream& os) = 0;
 };
 
 #endif
