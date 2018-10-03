@@ -8,42 +8,33 @@ class circularList : public list<T> {
                 T data;
                 node *next;
                 node *previous;
-                node(T data): data(data), next(NULL), previous(NULL) {}
+                node(T data, node *next, node *previous): data(data), next(next), previous(previous) {}
                 ~node() { if(next) delete next; }
         };
 
         node *head;
         node *tail;
 public:
-        circularList(): head(NULL), tail(NULL) {}
+        circularList(): head(NULL), tail(NULL) {
+                head = tail = new node(T(), NULL, NULL);
+                head->next = head->previous = head;
+        }
 
         void append(T data) {
-                if(!head) {
-                        tail = head = new node(data);
-                        head->next = head->previous = head;
-                }
-                else {
-                        node *n = tail;
-                        tail = head->previous = tail->next = new node(data);
-                        tail->previous = n;
-                        tail->next = head;
-                }
+                tail = head->previous = tail->next = new node(data, head, tail);
         }
 
         void insert(T data) {
-                node *n = head;
-                head = head->previous = tail->next = new node(data);
-                head->previous = tail;
-                head->next = n;
+                head->next = head->next->previous = new node(data, head->next, head);
         }
 
         void print(std::ostream& os) {
                 node *n = head;
-                do {
+                while(n->next != head) {
+                        n = n->next;
                         os << n->data;
                         os << std::endl;
-                        n = n->next;
-                } while(n != head);
+                };
         }
 };
 

@@ -13,6 +13,7 @@ int main(int argc, char const *argv[]) {
         list.print(std::cout);
 
         circularList<std::string> test;
+        
         test.append("hotdog");
         test.append("peanuts");
         test.append("popcorn");
