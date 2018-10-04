@@ -13,15 +13,14 @@ class circularList : public list<T> {
         };
 
         node *head;
-        node *tail;
 public:
-        circularList(): head(NULL), tail(NULL) {
-                head = tail = new node(T(), NULL, NULL);
+        circularList(): head(NULL) {
+                head = new node(T(), NULL, NULL);
                 head->next = head->previous = head;
         }
 
         void append(T data) {
-                tail = head->previous = tail->next = new node(data, head, tail);
+                head->previous = head->previous->next = new node(data, head, head->previous);
         }
 
         void insert(T data) {
