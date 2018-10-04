@@ -1,3 +1,12 @@
+/*
+
+This is the version that I made before we learned the doubly linked circular
+list with dummy head in class.  It's the same idea as doubleLinkedList.hpp.  I 
+decided not to touch it once class started even though there's problems just
+to show the work that I was able to do myself.
+
+*/
+
 #ifndef CIRCULARLIST_HPP
 #define CIRCULARLIST_HPP
 #include "list.hpp"
@@ -7,24 +16,25 @@ class circularList : public list<T> {
         struct node {
                 T data;
                 node *next;
-                node *previous;
-                node(T data, node *next, node *previous): data(data), next(next), previous(previous) {}
-                ~node() { if(next) delete next; }
+                node *prev;
+                node(T data, node *next, node *prev): data(data),
+                                                      next(next),
+                                                      prev(prev) {}
         };
 
         node *head;
 public:
         circularList(): head(NULL) {
                 head = new node(T(), NULL, NULL);
-                head->next = head->previous = head;
+                head->next = head->prev = head;
         }
 
         void append(T data) {
-                head->previous = head->previous->next = new node(data, head, head->previous);
+                head->prev = head->prev->next = new node(data, head, head->prev);
         }
 
         void insert(T data) {
-                head->next = head->next->previous = new node(data, head->next, head);
+                head->next = head->next->prev = new node(data, head->next, head);
         }
 
         void print(std::ostream& os) {
@@ -38,3 +48,12 @@ public:
 };
 
 #endif
+
+/*
+
+This is the version that I made before we learned the doubly linked circular
+list with dummy head in class.  It's the same idea as doubleLinkedList.hpp.  I 
+decided not to touch it once class started even though there's problems just
+to show the work that I was able to do myself.
+
+*/

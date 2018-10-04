@@ -1,24 +1,27 @@
 #include "list.hpp"
 #include "linkedList.hpp"
 #include "circularList.hpp"
+#include "doubleLinkedList.hpp"
 #include <iostream>
 
 int main(int argc, char const *argv[]) {
-        linkedList<int> list;
+        linkedList<std::string> list;
 
-        list.append(1);
-        list.append(2);
-        list.append(3);
-        list.insert(0);
+        list.append("worchestershire");
+        list.append("wombo");
+        list.append("   ");
+        list.insert("wiggle");
         list.print(std::cout);
 
-        circularList<std::string> test;
-        
-        test.append("hotdog");
-        test.append("peanuts");
-        test.append("popcorn");
-        test.insert("polar bear liver");
+        circularList<int> test;
+        for(int i = 0; i <= 15; i++) { test.append(i); }
         test.print(std::cout);
 
+        std::cout << std::endl;
+        doubleLinkedList<int> doubleList;
+        doubleList.append(5);
+        doubleList.append(6);
+        doubleList.insert(4);
+        doubleList.print(std::cout);
         return 0;
 }
