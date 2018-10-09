@@ -18,6 +18,26 @@ class doubleLinkedList : public list<T> {
         };
 
         node *head;
+
+        class iterator {
+                node *cur;
+        public:
+                iterator(const iterator &i): cur(i.cur) {}
+                iterator(node *cur): cur(cur) {}
+
+                bool operator ==(const iterator &i) { return cur == i.cur; }
+                bool operator !=(const iterator &i) { return cur != i.cur; }
+                T &operator *() { return cur->data; }
+                iterator &operator++() {
+                        cur = cur->next;
+                        return *this;
+                }
+                iterator &operator++(int) {
+                        iterator i(this);
+                        cur = cur->next;
+                        return i;
+                }
+        };
 public:
         doubleLinkedList(): head(new node) {}
         ~doubleLinkedList() {
@@ -43,6 +63,9 @@ public:
                         n = n->next;
                 }
 	}
+
+        iterator begin() { return iterator(head->next); }
+        iterator end() { return iterator(head); }
 };
 
 #endif

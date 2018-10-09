@@ -2,13 +2,8 @@
 #define LINKEDLIST_HPP
 #include "list.hpp"
 
-template<typename T> class linkedListIterator;
-
 template <typename T>
 class linkedList : public list<T> {
-        typedef linkedListIterator<T> iterator;
-        friend class linkedListIterator<T>;
-
         struct node {
                 T data;
                 node *next;
@@ -18,6 +13,26 @@ class linkedList : public list<T> {
 
         node *head;
         node *tail;
+
+        class iterator {
+                node *cur;
+        public:
+                iterator(const iterator &i): cur(i.cur) {}
+                iterator(node *cur): cur(cur) {}
+
+                bool operator ==(const iterator &i) { return cur == i.cur; }
+                bool operator !=(const iterator &i) { return cur != i.cur; }
+                T &operator *() { return cur->data; }
+                iterator &operator++() {
+                        cur = cur->next;
+                        return *this;
+                }
+                iterator &operator++(int) {
+                        iterator i(this);
+                        cur = cur->next;
+                        return i;
+                }
+        };
 public:
         linkedList(): head(NULL), tail(NULL) {}
         ~linkedList() { if (head) delete head; }
@@ -37,34 +52,17 @@ public:
                         tail = n;
         }
 
-        iterator begin() {
-                return head;
-        }
+	void print(std::ostream& os) {
+		node *n = head;
+		while (n) {
+			os << n->data;
+                        os << std::endl;
+			n = n->next;
+		}
+	}
 
-        iterator end() {
-                return NULL;
-        }
+        iterator begin() { return iterator(head); }
+        iterator end() { return iterator(NULL); }
 };
-
-template <typename T>
-class linkedListIterator {
-        typedef typename linkedList<T>::node node;
-};
-
-template <typename T>
-linkedListIterator<T> operator++(linkedListIterator<T> i) {
-        i.cur = i.cur->next;
-        return i;
-}
-
-template <typename T>
-linkedListIterator<T> operator*(linkedListIterator<T> i) {
-        return i.cur->data;
-}
-
-template <typename T>
-bool operator!=(linkedListIterator<T> a, linkedListIterator<T> b) {
-        return a.cur != b.cur;
-}
 
 #endif
