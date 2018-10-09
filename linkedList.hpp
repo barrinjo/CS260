@@ -2,8 +2,13 @@
 #define LINKEDLIST_HPP
 #include "list.hpp"
 
+template<typename T> class linkedListIterator;
+
 template <typename T>
 class linkedList : public list<T> {
+        typedef linkedListIterator<T> iterator;
+        friend class linkedListIterator<T>;
+
         struct node {
                 T data;
                 node *next;
@@ -32,14 +37,34 @@ public:
                         tail = n;
         }
 
-	void print(std::ostream& os) {
-		node *n = head;
-		while (n) {
-			os << n->data;
-                        os << std::endl;
-			n = n->next;
-		}
-	}
+        iterator begin() {
+                return head;
+        }
+
+        iterator end() {
+                return NULL;
+        }
 };
+
+template <typename T>
+class linkedListIterator {
+        typedef typename linkedList<T>::node node;
+};
+
+template <typename T>
+linkedListIterator<T> operator++(linkedListIterator<T> i) {
+        i.cur = i.cur->next;
+        return i;
+}
+
+template <typename T>
+linkedListIterator<T> operator*(linkedListIterator<T> i) {
+        return i.cur->data;
+}
+
+template <typename T>
+bool operator!=(linkedListIterator<T> a, linkedListIterator<T> b) {
+        return a.cur != b.cur;
+}
 
 #endif

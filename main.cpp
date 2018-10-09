@@ -2,6 +2,7 @@
 #include "linkedList.hpp"
 #include "circularList.hpp"
 #include "doubleLinkedList.hpp"
+#include "specialInt.hpp"
 #include <iostream>
 
 int main(int argc, char const *argv[]) {
@@ -11,17 +12,6 @@ int main(int argc, char const *argv[]) {
         list.append("wombo");
         list.append("   ");
         list.insert("wiggle");
-        list.print(std::cout);
+        for(auto n: list) { std::cout << n << std::endl }
 
-        circularList<int> test;
-        for(int i = 0; i <= 15; i++) { test.append(i); }
-        test.print(std::cout);
-
-        std::cout << std::endl;
-        doubleLinkedList<int> doubleList;
-        doubleList.append(5);
-        doubleList.append(6);
-        doubleList.insert(4);
-        doubleList.print(std::cout);
-        return 0;
 }
