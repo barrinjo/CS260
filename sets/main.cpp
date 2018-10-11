@@ -1,4 +1,6 @@
 #include <iostream>
+#include "treeSet.hpp"
+#include "set.hpp"
 
 int main(int argc, char const *argv[])
 {
@@ -6,16 +8,16 @@ int main(int argc, char const *argv[])
         using std::endl;
 
         treeSet<int> set;
-        set.add(1);
-        set.add(3);
-        set.add(5);
+        set += 1;
+        set += 3;
+        set += 5;
         if(set.contains(3))
                 cout << "set contains 3" << endl;
         if(!set.contains(4))
                 cout << "set doesn't contain 4" << endl;
-        set.remove(3);
+        set -= (3);
         if(!set.contains(3))
-                cout << "3 has been removed from the set" << endl;
-        
+                cout << "set doesn't contain 3" << endl;
+
         return 0;
 }
