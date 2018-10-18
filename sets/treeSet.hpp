@@ -43,6 +43,11 @@ class treeSet : public set<T> {
                                 }
                         }
                 }
+                bool remove(T elem) {
+                        if(elem == data) {
+                                
+                        }
+                }
         };
 
         node *root;
@@ -62,7 +67,7 @@ public:
                 }
         }
         bool remove(T elem) {
-                return true;
+                
         }
 };
 
