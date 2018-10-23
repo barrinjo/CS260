@@ -15,8 +15,8 @@ struct tree {
         void (*remove)(struct tree *, void *);
         int (*contains)(struct tree *, void *);
         void (*destroy)(struct tree *);
-        struct tree_iterator *(*begin)(struct tree *, struct tree_iterator *);
-        struct tree_iterator *(*end)(struct tree *, struct tree_iterator *);
+        struct tree_iterator *(*begin)(struct tree *);
+        struct tree_iterator *(*end)(struct tree *);
 };
 
 struct tree *treeCreate(int (*compare)(void *, void *));

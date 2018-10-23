@@ -10,7 +10,7 @@ int main(int argc, char const *argv[])
 	struct tree_iterator *end;
 
 	//make tree  and add words
-	tree = tree_create(strcmp);
+	tree = tree_create((int (*)(void *, void *))strcmp);
 	tree->add(tree, "hello");
 	tree->add(tree, "world");
 	tree->add(tree, "worchestershire");
@@ -31,8 +31,8 @@ int main(int argc, char const *argv[])
 	//check for words
 	if(tree->contains(tree, "woof"))
 		printf("tree contains \"woof\"\n");
-	if(tree-contains(tree, "nope"))
-		printf("tree does not contain \"nope\"")
+	if(tree->contains(tree, "nope"))
+		printf("tree does not contain \"nope\"");
 
 	//remove word 'woof'
 	tree->remove(tree, "woof");
