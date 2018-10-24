@@ -25,8 +25,8 @@ int main(int argc, char const *argv[])
 		printf("%s\n", i->get(i));
 		i->next(i);
 	}
-	i->destroy(i);
-	end->destroy(end);
+	// XXX i->destroy(i);
+	// XXX end->destroy(end);
 
 	//check for words
 	if(tree->contains(tree, "woof"))

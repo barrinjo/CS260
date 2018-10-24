@@ -169,6 +169,7 @@ struct tree *tree_create(int (compare)(void *, void *)) {
 	tree->tree.contains = (int (*)(struct tree *, void *)) contains;
 	tree->tree.destroy = (void (*)(struct tree *)) _destroy;
 	tree->tree.begin = (struct tree_iterator *(*)(struct tree *)) _begin;
+	tree->tree.end = (struct tree_iterator *(*)(struct tree *)) _end;
 	tree->tree.add = _add;
 	tree->root = NULL;
 	return (struct tree *) tree;
