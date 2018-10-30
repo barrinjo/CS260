@@ -2,6 +2,8 @@
 #define HASHTABLE_HPP
 #define SIZE 32
 
+#include<cstdlib>
+
 class hashtable {
         struct node {
                 int data;
@@ -9,6 +11,8 @@ class hashtable {
 
                 node(int data): data(data) {}
         };
+
+        static size_t hash(int data) { return data % SIZE; }
 
         node *buckets[SIZE];
 public:
