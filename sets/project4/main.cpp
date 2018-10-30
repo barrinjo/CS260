@@ -19,6 +19,12 @@ int main(int argc, char const *argv[])
         h.add(36);
         h.add(44);
 
+        /*for(int i : h)
+                cout << i << endl;*/
+
+        for(hashtable::iterator i = h.begin(); i != h.end(); ++i)
+                cout << *i << endl;
+
         if(h.contains(70))
                 cout << "now contains 70" << endl;
         if(h.contains(36))
