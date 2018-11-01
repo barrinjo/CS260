@@ -22,8 +22,8 @@ int main(int argc, char const *argv[])
         /*for(int i : h)
                 cout << i << endl;*/
 
-        //for(hashclosed::iterator i = h.begin(); i != h.end(); ++i)
-        //        cout << *i << endl;
+        for(hashclosed::iterator i = h.begin(); i != h.end(); ++i)
+                cout << *i << endl;
 
         if(h.contains(70))
                 cout << "now contains 70" << endl;
