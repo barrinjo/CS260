@@ -22,12 +22,13 @@ class AVLTree {
                         if(this->data == data) {
                                 return NULL;
                         } else if(this->data > data) {
-                                node *n
+                                node *n;
                                 if(left)
                                         n = left->ensure(data);
                                 else
                                         n = left = new node(data);
                                 if(left->height + 1 > height) height = left->height + 1;
+                                return n;
                         } else {
                                 node *n;
                                 if(right)
@@ -35,8 +36,8 @@ class AVLTree {
                                 else
                                         n = right = new node(data);
                                 if(right->height + 1 > height) height = right->height + 1;
+                                return n;
                         }
-                        return n;
                 }
                 int balance() {
                         int b = 0;
