@@ -51,10 +51,25 @@ class RedBlackTree {
                         return n;
                 int dir = n->data < data;
                 n->link[dir] = insert(n->link[dir], data);
-                /* XXX rebalance */
+
+                if(is_red(n->link[dir])) {
+                        if(is_red(n->link[!dir])) {
+                                n->red = true;
+                                n->left->red = false;
+                                n->right->red = false;
+                        } else {
+                                if(is_red(n->link[dir]->link[dir]))
+                                        n = n->rotate(!dir);
+                                else if(is_red(n->link[dir]->link[!dir]))
+                                        n = n->doubleRotate(!dir);
+                        }
+                }
+
                 return n;
         }
 public:
+        RedBlackTree(): root() {}
+        ~RedBlackTree() { if(root) delete root; }
         void add(T data) {
                 root = insert(root, data);
                 root->red = false;
