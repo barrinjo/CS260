@@ -1,36 +1,37 @@
 #include <iostream>
 #include "AVLTree.hpp"
+#define SIZE 1000000000
+
+void clearScreen() {
+        std::cout << "\033[2J\033[1;1H";
+}
 
 int main(int argc, char const *argv[])
 {
         using std::cout;
         using std::endl;
 
-        AVLTree<int> h;
+        AVLTree<long> h;
         if(h.contains(70))
                 cout << "contains 70" << endl;
 
-        h.add(70);
-        h.add(13);
-        h.add(15);
-        h.add(198);
-        h.add(123909);
-        h.add(4);
-        h.add(36);
-        h.add(44);
+        for(long i = 0; i < SIZE; i++) {
+                h.add(i);
+                if(i%100000 == 0) {
+                        float complete = 100*((float)i / (float)SIZE);
+                        cout << "binary tree " << complete << " percent complete..." << std::flush;
+                        clearScreen();
+                }
+        }
 
-        /*for(int i : h)
-                cout << i << endl;*/
+        long input;
+        while(true) {
+                cout << "pick a number: ";
+                std::cin >> input;
+                if(h.contains(input))
+                        cout << "found" << endl;
+        }
 
-       /* for(hashclosed::iterator i = h.begin(); i != h.end(); ++i)
-                cout << *i << endl;*/
-
-        if(h.contains(70))
-                cout << "now contains 70" << endl;
-        if(h.contains(36))
-                cout << "now contains 36" << endl;
-        if(!h.contains(3))
-                cout << "does not contain 3" << endl;
 
         return 0;
 }

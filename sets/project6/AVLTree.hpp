@@ -1,56 +1,80 @@
 #ifndef AVLTREE_HPP
 #define AVLTREE_HPP
 
-#include <cstdlib>
-
 template <typename T>
 class AVLTree {
         struct node {
                 T data;
                 node *left;
                 node *right;
-                node *parent;
-                size_t height;
-                node(T data): data(data), left(NULL), right(NULL), parent(NULL), height(1) {}
+                unsigned height;
+                node(T data): data(data), left(NULL), right(NULL), height(1) {}
                 ~node() {
                         if(left)
                                 delete left;
                         if(right)
                                 delete right;
                 }
-                node *ensure(T data) {
-                        if(this->data == data) {
-                                return NULL;
-                        } else if(this->data > data) {
-                                node *n;
-                                if(left)
-                                        n = left->ensure(data);
-                                else
-                                        n = left = new node(data);
-                                if(left->height + 1 > height) height = left->height + 1;
-                                return n;
-                        } else {
-                                node *n;
-                                if(right)
-                                        n = right->ensure(data);
-                                else
-                                        n = right = new node(data);
-                                if(right->height + 1 > height) height = right->height + 1;
-                                return n;
-                        }
-                }
-                int balance() {
-                        int b = 0;
+                void dump(std::ostream &os) {
+                        os << data << std::endl;
                         if(left)
-                                b -= left->height;
+                                left->dump(os);
                         if(right)
-                                b += right->height;
-                        return b;
+                                right->dump(os);
                 }
         };
         node *root;
-        void rebalance(node *n) {
-                
+        
+        static unsigned height(node *n) {
+                return n? n->height : 0;
+        }
+        static int balance(node *n) {
+                return n? height(n->left) - height(n->right) : 0;
+        }
+        static node *rightRotate(node *y) {
+                node *x = y->left;
+                node *T2 = x->right;
+                x->right = y;
+                y->left = T2;
+                y->height = std::max(height(y->left), height(y->right)) + 1;
+                x->height = std::max(height(x->left), height(x->right)) + 1;
+                return x;
+        }
+        static node *leftRotate(node *x) {
+                node *y = x->right;
+                node *T2 = y->left;
+                y->left = x;
+                x->right = T2;
+                x->height = std::max(height(x->left), height(x->right)) + 1;
+                y->height = std::max(height(y->left), height(y->right)) + 1;
+                return y;
+        }
+        static node *insert(node *n, T data) {
+                if(!n)
+                        return new node(data);
+                if(data < n->data)
+                        n->left = insert(n->left, data);
+                else if(data > n->data)
+                        n->right = insert(n->right, data);
+                else
+                        return n;
+                n->height = std::max(height(n->left), height(n->right)) + 1;
+                int b = balance(n);
+
+                if(b > 1 && data < n->data)
+                        return rightRotate(n);
+                if(b < -1 && data > n->data)
+                        return leftRotate(n);
+                if(b > 1 && data > n->data) {
+                        n->left = leftRotate(n);
+                        return rightRotate(n);
+                }
+                if(b < -1 && data < n->data) {
+                        n->right = rightRotate(n);
+                        return leftRotate(n);
+                }
+                return n;
+
         }
 public:
         AVLTree(): root(NULL) {}
@@ -58,16 +82,7 @@ public:
                 if(root)
                         delete root;
         }
-        void add(T data) {
-                if(!root) {
-                        root = new node(data);
-                        return;
-                }
-                node *n = root->ensure(data);
-                if(!n)
-                        return;
-                rebalance(n);
-        }
+        void add(T data) { root = insert(root, data); }
         bool contains(T data) {
                 node *n = root;
                 while(n) {
@@ -79,6 +94,10 @@ public:
                                 n = n->left;
                 }
                 return false;
+        }
+        void dump(std::ostream &os) {
+                if(root)
+                        root->dump(os);
         }
 };
 
