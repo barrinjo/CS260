@@ -72,7 +72,7 @@ class wordTree {
                 bubble(stack.size() - 1);
         }
         void fill(int i) {
-                if(stack[left(i)].eDist) {
+                if(left(i) <= stack.size()) {
                         if(stack[left(i)].eDist < stack[right(i)].eDist) {
                                 stack[i] = stack[left(i)];
                                 fill(left(i));
@@ -94,18 +94,16 @@ public:
                 unsigned l;
                 for(string dictword: dict) {
                         l = editDistance(word, dictword);
-                        if(l < 2) {
-                                add(node(l, dictword));
-                        }
+                        add(node(l, dictword));
                 }
                 cout << "Did you mean: " << flush;
                 for(int i = 0; i < 5 && !stack.empty(); i++) {
-                        cout << "| " << stack[i].word << " |" << flush;
+                        cout << stack[0].word << ", " << flush;
+                        fill(0);
                         //fill(0);
                 }
                 cout << endl;
                 stack.clear();
-                cout << 1 << endl;
         }
 };
 
