@@ -82,12 +82,12 @@ public:
                                 l = editDistance(word, dictword);
                                 add(node(l, dictword));
                         } else {
-                                cout << "Good spelling, son.  I'm proud of you." << endl;
+                                cout << "Good spelling." << endl;
                                 stack.clear();
                                 return;
                         }
                 }
-                cout << "That was a good try, son.  Did you mean: " << flush;
+                cout << "Did you mean: " << flush;
                 for(int i = 0; i < 5 && !stack.empty(); i++) {
                         cout << stack[0].word << ", " << flush;
                         fill(0);
