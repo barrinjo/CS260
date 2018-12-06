@@ -27,21 +27,6 @@ class wordTree {
         int right(int i) {
                 return (i*2)+2;
         }
-        /*int editDistance(string string1, string string2, int m, int n) {
-                if(m == 0)
-                        return n;
-
-                if(n == 0) return m;
-
-                if(string1[m-1] == string2[n-1]) {
-                        return editDistance(string1, string2, m-1, n-1);
-                }
-
-                return 1 + min (min(editDistance(string1, string2, m, n-1),
-                                editDistance(string1, string2, m-1, n)),
-                                editDistance(string1, string2, m-1, n-1)
-                                );
-        }*/
         unsigned editDistance(string a, string b) {
                 unsigned d[a.length() + 1][b.length() + 1];
                 d[0][0] = 0;
@@ -93,10 +78,16 @@ public:
         void check(string word) {
                 unsigned l;
                 for(string dictword: dict) {
-                        l = editDistance(word, dictword);
-                        add(node(l, dictword));
+                        if(word != dictword) {
+                                l = editDistance(word, dictword);
+                                add(node(l, dictword));
+                        } else {
+                                cout << "Good spelling, son.  I'm proud of you." << endl;
+                                stack.clear();
+                                return;
+                        }
                 }
-                cout << "Did you mean: " << flush;
+                cout << "That was a good try, son.  Did you mean: " << flush;
                 for(int i = 0; i < 5 && !stack.empty(); i++) {
                         cout << stack[0].word << ", " << flush;
                         fill(0);
