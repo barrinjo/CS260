@@ -36,10 +36,9 @@ class wordTree {
                         d[0][j] = j;
                 for(size_t i = 1; i <= a.length(); ++i) {
                         for(size_t j = 1; j <= b.length(); ++j) {
-                                d[i][j] = min(min(
-                                        d[i][j - 1] + 1,
-                                        d[i-1][j] + 1), 
-                                        d[i - 1][j - 1] + (a[i - 1] != b[j - 1]));
+                                d[i][j] = min({d[i][j - 1] + 1,
+                                        d[i-1][j] + 1, 
+                                        d[i - 1][j - 1] + (a[i - 1] != b[j - 1])});
                         }
                 }
                 return d[a.length()][b.length()];
@@ -80,7 +79,9 @@ public:
                 for(string dictword: dict) {
                         if(word != dictword) {
                                 l = editDistance(word, dictword);
-                                add(node(l, dictword));
+                                if(l < 5) {
+                                        add(node(l, dictword));
+                                }
                         } else {
                                 cout << "Good spelling." << endl;
                                 stack.clear();
